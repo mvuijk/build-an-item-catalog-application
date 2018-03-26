@@ -1,0 +1,12 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="row bg-light">
+    <div class="col">
+    
+    <!-- show item details -->
+    </br> <h4>Item: {{item.name}}</h4>
+        <p><strong>Description: </strong>{{item.description}}</p>
+        <a href="{{url_for('showCatalogCategoryItems', category_name=item.category.name)}}">Back</a> </br> </br>
+    </div>
+</div>
+{% endblock %}

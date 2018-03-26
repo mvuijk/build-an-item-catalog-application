@@ -1,0 +1,10 @@
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{url_for("showCatalog")}}">Catalog App</a>
+    
+    <!-- depending on user logon button logon or logoff will be shown -->
+    {% if "username" not in session %}
+        <a class="btn btn-outline-primary" role="button", href="{{url_for('showLogin')}}">Login</a>
+    {% else %}
+        <a class="btn btn-outline-primary" role="button", href="{{url_for('disconnect')}}">Logout</a>
+    {% endif %}
+</nav>

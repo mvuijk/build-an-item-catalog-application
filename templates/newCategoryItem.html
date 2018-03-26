@@ -1,0 +1,39 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="row bg-light">
+        <div class="col">
+
+        <!-- form for adding a new item -->    
+        </br> <h2>Add Item</h2>
+        
+        <form action='{{url_for("newCatalogCategoryItem")}}' method='post'>
+            
+            <!-- title -->
+            <div class="form-group">
+                <label for="Title">Title</label>
+                <input class="form-control" type="text" size=80  id="Title" name="title" placeholder="Item Name" required autofocus>
+            </div>
+            
+            <!-- description -->
+            <div class="form-group">
+                <label for="Description">Description</label>
+                <textarea class="form-control" type='text' rows=5 id="Description" name="description" placeholder="Description"></textarea>
+            </div>
+
+            <!-- category -->
+            <div class="form-group">
+                <label for="Category">Category</label>
+                <select class="form-control" id="Category" name="category" required>
+                    {% for i in categories %}
+                        <option value={{i.name}}>{{i.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- button for submitting the form and link to cancel -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href='{{url_for("showCatalog")}}'>Cancel</a>            
+        </form> </br>
+    </div>
+</div>
+{% endblock %}

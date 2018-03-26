@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="row bg-light">
+    <div class="col">
+
+        <!-- show item details -->
+        </br> <h4>Item: {{item.name}}</h4>
+        <p><strong>Description: </strong> {{item.description}}</p>
+        
+        <!-- show links for editing, deleting or back --> 
+        <a href="{{url_for('editCatalogCategoryItem', item_name=item.name)}}">Edit</a>
+        <span> | </span>
+        <a href="{{url_for('deleteCatalogCategoryItem', item_name=item.name)}}">Delete</a>
+        <span> | </span>
+        <a href="{{url_for('showCatalogCategoryItems', category_name=item.category.name)}}">Back</a> </br> </br>
+    </div>
+</div>
+{% endblock %}

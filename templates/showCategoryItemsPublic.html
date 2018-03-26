@@ -1,0 +1,38 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="row bg-light">
+
+            <!-- max container width : 540px -->
+            <div class="col-sm">
+                <!-- template for flash messages -->
+                {% include "flash.html" %}
+
+                <!-- show list of Categories -->
+                <h5>Categories</h5>
+                {% for i in categories %}
+                    <a href="{{url_for('showCatalogCategoryItems', category_name=i.name)}}">{{i.name}}</a> </br>
+                {% endfor %}
+                </br>
+            </div>
+
+            <!-- max container width : 540px -->
+            <div class="col-sm">
+                </br> </br> </br>
+
+                <!-- show list of Items -->
+                {% if rows == 1 %}
+                    <h5>{{category_name}} Items ({{rows}} item)</h5>
+                {% else %}
+                    <h5>{{category_name}} Items ({{rows}} items)</h5>
+                {% endif %}
+                {% for i in items %}
+                    <a href="{{url_for('showCatalogCategoryItemInfo', category_name=i.category.name, item_name=i.name)}}">{{i.name}}</a> </br>
+                {% endfor %}
+                </br>
+            </div>
+        </div>
+    </div>
+</div>            
+{% endblock %}

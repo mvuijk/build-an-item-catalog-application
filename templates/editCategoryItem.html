@@ -1,0 +1,42 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="row bg-light">
+    <div class="col">
+
+        <!-- form for adding a new item -->
+        </br> <h4>Edit Item</h4>
+
+        <form action='{{url_for("editCatalogCategoryItem", item_name=item.name)}}' method="post">
+        
+            <!-- title -->
+            <div class="form-group">
+                <label for="Title">Title</label>
+                    <input type="text" size=80 class="form-control" id="Title" name='title' value="{{item.name}}" required autofocus>
+            </div>
+
+            <!-- description -->
+            <div class="form-group">
+                <label for="Description">Description</label>
+                <textarea class="form-control" id="Description" type="text" rows=5 name='description'>{{item.description}}</textarea>
+            </div>
+
+            <!-- category -->
+            <div class="form-group">
+                <label for="Category">Category</label>
+                <select class="form-control" id="Category" name="category" required>
+                    <option value="{{item.category.name}}">{{item.category.name}}</option>
+                    {% for i in categories %}
+                        {% if item.category.name != i.name %}
+                            <option value="{{i.name}}">{{i.name}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- button for submitting the form and link to cancel -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href='{{url_for("showCatalogCategoryItemInfo", category_name=item.category.name, item_name=item.name)}}'>Cancel</a>
+        </form> </br>
+    </div>
+</div>
+{% endblock %}

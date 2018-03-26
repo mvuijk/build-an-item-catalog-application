@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="row bg-light">
+    <div class="col">
+
+        <!-- deleting an item -->
+        </br> <h4>Delete Item</h4>
+        <p>Are you sure you want to delete item: "<strong>{{item.name}}</strong>" ?</p>
+        <form action='{{url_for("deleteCatalogCategoryItem", item_name=item.name)}}', method='post'>
+ 
+            <!-- button for submitting the form and link to cancel -->
+            <button type="submit" class="btn btn-primary">Delete</button>
+            <a href='{{url_for("showCatalogCategoryItemInfo", category_name=item.category.name, item_name=item.name)}}'>Cancel</a>
+        </form>
+        </br>
+    </div>
+</div>
+{% endblock %}
