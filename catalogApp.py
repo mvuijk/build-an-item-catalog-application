@@ -5,26 +5,26 @@ import httplib2
 import json
 import requests
 
-from flask import Flask,           \
-                  render_template, \
-                  flash,           \
-                  request,         \
-                  url_for,         \
-                  redirect,        \
-                  jsonify,         \
-                  json,            \
-                  make_response,   \
-                  session as login_session
+from flask import (Flask,
+                   render_template,
+                   flash,
+                   request,
+                   url_for,
+                   redirect,
+                   jsonify,
+                   json,
+                   make_response,
+                   session as login_session)
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from databaseSetup import Base,            \
-                          User,            \
-                          CatalogCategory, \
-                          CatalogCategoryItem
+from databaseSetup import (Base,
+                           User,
+                           CatalogCategory,
+                           CatalogCategoryItem)
 
-from oauth2client.client import flow_from_clientsecrets, \
-                                FlowExchangeError
+from oauth2client.client import (flow_from_clientsecrets,
+                                 FlowExchangeError)
 
 
 CLIENT_ID = json.loads(
@@ -481,14 +481,20 @@ def editCatalogCategoryItem(item_name):
         item.category_id = current_category.id
         session.add(item)
         session.commit()
-
         flash("Item '%s' has been changed!" % request.form['title'])
         return redirect(url_for("showCatalog"))
     else:
-        # call helper method categories
-        current_categories = categories()
-        return render_template(
-            'editCategoryItem.html', categories=current_categories, item=item)
+        # check if user who is logged in is authorized to edit item
+        if login_session["user_id"] != item.user_id:
+            flash("You are not authorized to edit item '%s' !" % item_name)
+            flash("Please add your own item first.")
+            return redirect(url_for("showCatalog"))
+        else:
+            # call helper method categories
+            current_categories = categories()
+            return render_template(
+                'editCategoryItem.html',
+                categories=current_categories, item=item)
 
 
 @app.route('/catalog/<string:item_name>/delete/', methods=['GET', 'POST'])
@@ -500,17 +506,22 @@ def deleteCatalogCategoryItem(item_name):
     if "username" not in login_session:
         return redirect("/login")
 
-    # Read one entry from 'catalog_category_items' table on filter 'item name'
+    # read one entry from 'catalog_category_items' table on filter 'item name'
     item = session.query(CatalogCategoryItem).filter_by(name=item_name).one()
 
     if request.method == "POST":
         session.delete(item)
         session.commit()
-
         flash("Item '%s' has been deleted!" % item_name)
         return redirect(url_for("showCatalog"))
     else:
-        return render_template("deleteCategoryItem.html", item=item)
+        # check if user who is logged in is authorized to delete item
+        if login_session["user_id"] != item.user_id:
+            flash("You are not authorized to delete item '%s' !" % item_name)
+            flash("Please add your own item first.")
+            return redirect(url_for("showCatalog"))
+        else:
+            return render_template("deleteCategoryItem.html", item=item)
 
 
 if __name__ == "__main__":
