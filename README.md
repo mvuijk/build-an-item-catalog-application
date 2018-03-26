@@ -45,4 +45,4 @@ Next step is to start the web application.
     * Debugger PIN: 925-200-313
 ```
 
-8. Open a browser an type the folowing URL [localhost:8000](localhost:8000).
+8. Open a browser an type the folowing URL [localhost:8000](http://localhost:8000/).
