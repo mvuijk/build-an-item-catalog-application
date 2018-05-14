@@ -63,6 +63,6 @@ class CatalogCategoryItem(Base):
             "description": self.description
         }
 
-engine = create_engine('sqlite:///catalogCategoryItems.db')
+engine = create_engine('postgresql://catalog:sillypassword@localhost/catalog')
 
 Base.metadata.create_all(engine)
